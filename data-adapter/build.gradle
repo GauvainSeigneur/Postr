@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -37,6 +38,11 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "androidx.room:room-runtime:$archVersion"
+    kapt "androidx.room:room-compiler:$archVersion"
+
+    testImplementation "androidx.arch.core:core-testing:$archVersionTesting"
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
