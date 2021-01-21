@@ -3,6 +3,7 @@ package com.seigneur.gauvain.repository.service
 import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
+import kotlin.jvm.Throws
 
 /**
  * Interceptor which add client id as new query parameter in every request we make

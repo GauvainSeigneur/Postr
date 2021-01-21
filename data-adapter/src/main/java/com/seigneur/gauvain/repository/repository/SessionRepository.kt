@@ -1,6 +1,6 @@
 package com.seigneur.gauvain.repository.repository
 
-class TokenRepository {
+class SessionRepository {
     companion object {
         var accessToken: String? = null
     }
