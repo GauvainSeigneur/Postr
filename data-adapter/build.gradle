@@ -40,7 +40,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "androidx.room:room-runtime:$archVersion"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$archVersion"
     kapt "androidx.room:room-compiler:$archVersion"
+
 
     testImplementation "androidx.arch.core:core-testing:$archVersionTesting"
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"

@@ -1,14 +1,12 @@
 package com.seigneur.gauvain.repository.di
 
 import android.util.Log
-import com.seigneur.gauvain.repository.di.DatasourceProperties.SERVER_URL
 import com.seigneur.gauvain.repository.service.ClientIdInterceptor
 import com.seigneur.gauvain.repository.service.HeaderAccessTokenInterceptor
 import com.seigneur.gauvain.repository.service.UnsplashService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.core.Koin
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -44,11 +42,5 @@ val remoteDataSourceModule = module {
 
     factory { get<Retrofit>().create(UnsplashService::class.java) }
 }
-
-object DatasourceProperties {
-
-    const val SERVER_URL = "https://api.unsplash.com/"
-}
-
 
 

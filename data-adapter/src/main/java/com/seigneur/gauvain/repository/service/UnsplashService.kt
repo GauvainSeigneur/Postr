@@ -1,6 +1,6 @@
 package com.seigneur.gauvain.repository.service
 
-import com.seigneur.gauvain.repository.models.AccessToken
+import com.seigneur.gauvain.repository.models.remote.AccessToken
 import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Query

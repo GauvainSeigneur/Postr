@@ -1,4 +1,4 @@
-package com.seigneur.gauvain.repository.models
+package com.seigneur.gauvain.repository.models.remote
 
 import com.google.gson.annotations.SerializedName
 

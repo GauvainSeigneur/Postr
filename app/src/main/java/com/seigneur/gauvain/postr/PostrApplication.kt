@@ -1,10 +1,7 @@
 package com.seigneur.gauvain.postr
 
 import android.app.Application
-import com.seigneur.gauvain.presentation.di.dataAdapterModule
-import com.seigneur.gauvain.presentation.di.dataRemoteDataSourceModule
-import com.seigneur.gauvain.presentation.di.domainUseCaseModule
-import com.seigneur.gauvain.presentation.di.viewModelModule
+import com.seigneur.gauvain.presentation.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -22,6 +19,7 @@ class PostrApplication : Application() {
                 listOf(
                     dataRemoteDataSourceModule,
                     dataAdapterModule,
+                    dataDataBaseModule,
                     domainUseCaseModule,
                     viewModelModule
                 )

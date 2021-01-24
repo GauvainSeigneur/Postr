@@ -1,4 +1,4 @@
-package com.seigneur.gauvain.repository.models
+package com.seigneur.gauvain.repository.models.remote
 
 abstract class BaseResponse {
     //in case of error like wrong api key
