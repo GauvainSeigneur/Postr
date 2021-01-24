@@ -19,7 +19,7 @@ interface TokenDao {
     /**
      * @return TokenEntity if exists, nothing if not
      */
-    @get:Query("SELECT * FROM tokenentity")
+    @Query("SELECT * FROM tokenentity")
     suspend fun getTokenEntity(): TokenEntity?
 
 }

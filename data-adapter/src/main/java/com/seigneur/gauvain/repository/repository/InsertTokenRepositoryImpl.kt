@@ -1,5 +1,6 @@
 package com.seigneur.gauvain.repository.repository
 
+import android.util.Log
 import com.seigneur.gauvain.domain.models.Token
 import com.seigneur.gauvain.domain.models.repository.RepositoryResult
 import com.seigneur.gauvain.domain.repository.InsertTokenException
@@ -21,6 +22,7 @@ class InsertTokenRepositoryImpl(private val tokenDao: TokenDao) :
             tokenDao.insertTokenEntity(tokenEntity)
         }) {
             is RepositoryResult.Success -> {
+                Log.d("insertToken", "success ${result.data}")
                 return result.data
             }
             is RepositoryResult.Error -> {

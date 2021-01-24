@@ -20,6 +20,7 @@ class PostrApplication : Application() {
                     dataRemoteDataSourceModule,
                     dataAdapterModule,
                     dataDataBaseModule,
+                    dataManagerModule,
                     domainUseCaseModule,
                     viewModelModule
                 )
