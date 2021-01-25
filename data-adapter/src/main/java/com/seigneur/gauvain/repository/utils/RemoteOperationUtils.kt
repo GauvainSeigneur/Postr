@@ -1,13 +1,13 @@
 package com.seigneur.gauvain.repository.utils
 
+import android.util.Log
 import com.seigneur.gauvain.domain.models.repository.*
-import com.seigneur.gauvain.repository.models.remote.BaseResponse
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 import java.net.UnknownHostException
 
-suspend fun <T : BaseResponse> apiCall(call: suspend () -> Response<T>): RepositoryResult<T> {
+suspend fun <T> apiCall(call: suspend () -> Response<T>): RepositoryResult<T> {
     val response: Response<T>
     try {
         response = call.invoke()
@@ -17,29 +17,20 @@ suspend fun <T : BaseResponse> apiCall(call: suspend () -> Response<T>): Reposit
 
     return if (!response.isSuccessful) {
         val errorBody = response.errorBody()
+        Log.d("remoteOperationUtils", "response unsuccessful: $errorBody")
         RepositoryResult.Error(
             RepositoryExceptionContent(
                 RepositoryExceptionType.Remote(
                     HttpRequestExceptionType.REQUEST_UNSUCCESSFUL
                 ),
+                //Gson().fromJson(errorBody.toString() , javaClass) //todo deserialize it
                 errorBody.toString()
             )
         )
     } else {
         val body = response.body()
         body?.let { responseBody ->
-            return if (!responseBody.errors.isNullOrEmpty()) {
-                RepositoryResult.Error(
-                    RepositoryExceptionContent(
-                        RepositoryExceptionType.Remote(
-                            HttpRequestExceptionType.ERROR_RESPONSE
-                        ),
-                        responseBody.errors?.joinToString()
-                    )
-                )
-            } else {
-                RepositoryResult.Success(responseBody)
-            }
+            RepositoryResult.Success(responseBody)
         } ?: return RepositoryResult.Error(
             RepositoryExceptionContent(
                 RepositoryExceptionType.Remote(

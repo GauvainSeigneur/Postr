@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.seigneur.gauvain.domain.models.outcome.OutCome
 import com.seigneur.gauvain.domain.usecase.GetCurrentTokenUseCase
 import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
-import com.seigneur.gauvain.presentation.model.SplashData
+import com.seigneur.gauvain.presentation.model.AuthenticationState
 import com.seigneur.gauvain.presentation.utils.backgroundJob
 
-typealias SplashState = LiveDataState<SplashData>
+private typealias SplashState = LiveDataState<AuthenticationState>
 
 class SplashViewModel(
     private val getCurrentTokenUseCase: GetCurrentTokenUseCase
@@ -29,10 +29,10 @@ class SplashViewModel(
     private suspend fun getToken() {
         when (val outcome = getCurrentTokenUseCase()) {
             is OutCome.Success -> {
-                splashState.postValue(LiveDataState.Success(SplashData.AUTHENTICATED))
+                splashState.postValue(LiveDataState.Success(AuthenticationState.AUTHENTICATED))
             }
             is OutCome.Error -> {
-                splashState.postValue(LiveDataState.Success(SplashData.NOT_AUTHENTICATED))
+                splashState.postValue(LiveDataState.Success(AuthenticationState.NOT_AUTHENTICATED))
                 Log.d("getCurrentToken", "fail ${outcome.outComeError}")
             }
         }

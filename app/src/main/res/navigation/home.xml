@@ -7,7 +7,7 @@
     app:startDestination="@+id/homeScreen">
     <fragment
         android:id="@+id/homeScreen"
-        android:name="com.seigneur.gauvain.postr.views.HomeFragment"
+        android:name="com.seigneur.gauvain.postr.views.home.HomeFragment"
         android:label="home"
         tools:layout="@layout/fragment_home">
         <action

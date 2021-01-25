@@ -1,6 +1,6 @@
 package com.seigneur.gauvain.presentation.model
 
-enum class SplashData {
+enum class AuthenticationState {
     AUTHENTICATED,
     NOT_AUTHENTICATED
 }

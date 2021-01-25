@@ -8,7 +8,7 @@ import com.seigneur.gauvain.postr.R
 import com.seigneur.gauvain.postr.views.MainActivity
 import com.seigneur.gauvain.postr.views.login.LogInActivity
 import com.seigneur.gauvain.presentation.SplashViewModel
-import com.seigneur.gauvain.presentation.model.SplashData
+import com.seigneur.gauvain.presentation.model.AuthenticationState
 import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.reflect.KClass
@@ -24,10 +24,10 @@ class SplashActivity : AppCompatActivity() {
             when (it) {
                 is LiveDataState.Success -> {
                     when (it.data) {
-                        SplashData.AUTHENTICATED -> {
+                        AuthenticationState.AUTHENTICATED -> {
                             sendToRelatedActivity(MainActivity::class)
                         }
-                        SplashData.NOT_AUTHENTICATED -> {
+                        AuthenticationState.NOT_AUTHENTICATED -> {
                             sendToRelatedActivity(LogInActivity::class)
                         }
                     }

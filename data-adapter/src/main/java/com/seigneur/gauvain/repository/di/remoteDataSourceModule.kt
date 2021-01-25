@@ -37,6 +37,7 @@ val remoteDataSourceModule = module {
             .client(get())
             .baseUrl(getProperty("server_url") as String)
             .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
