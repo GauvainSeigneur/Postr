@@ -1,17 +1,15 @@
-package com.seigneur.gauvain.presentation
+package com.seigneur.gauvain.presentation.home
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.seigneur.gauvain.domain.models.Photo
 import com.seigneur.gauvain.domain.models.outcome.OutCome
 import com.seigneur.gauvain.domain.usecase.GetPhotoListUseCase
-import com.seigneur.gauvain.presentation.model.AuthenticationState
 import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
 import com.seigneur.gauvain.presentation.model.PhotoUiModel
-import com.seigneur.gauvain.presentation.model.livedata.ErrorData
-import com.seigneur.gauvain.presentation.model.livedata.ErrorDataType
-import com.seigneur.gauvain.presentation.utils.ioJob
 
 private typealias PhotoListState = LiveDataState<List<PhotoUiModel>>
 
@@ -19,7 +17,31 @@ class HomeViewModel(
     private val getPhotoListUseCase: GetPhotoListUseCase
 ) : ViewModel() {
 
-    private val photoListState: MutableLiveData<PhotoListState> by lazy {
+    var list: LiveData<PagedList<PhotoUiModel>>? = null
+
+    private val config = PagedList.Config.Builder()
+        .setPageSize(5)
+        .setInitialLoadSizeHint(2 * 15)
+        .setEnablePlaceholders(true)
+        .build()
+
+    private val datasourceFactory = MovieDatasourceFactory(this)
+
+    init {
+
+        config?.let {
+            list = LivePagedListBuilder(datasourceFactory, it).build()
+        }
+
+
+    }
+
+    suspend fun getListOfPhotos(page: Long): OutCome<List<Photo>> {
+        return getPhotoListUseCase(page, 10, null)
+    }
+
+
+    /*private val photoListState: MutableLiveData<PhotoListState> by lazy {
         ioJob {
             getPhotoList()
         }
@@ -27,10 +49,9 @@ class HomeViewModel(
     }
     val photoListData: LiveData<PhotoListState> by lazy {
         photoListState
-    }
+    }*/
 
-
-    private suspend fun getPhotoList() {
+    /*private suspend fun getPhotoList() {
         when (val outcome = getPhotoListUseCase(0, 30, null)) {
             is OutCome.Success -> {
                 val list = outcome.data.map {
@@ -53,6 +74,6 @@ class HomeViewModel(
                 Log.d("getPhotoList", "fail ${outcome.outComeError}")
             }
         }
-    }
+    }*/
 
 }

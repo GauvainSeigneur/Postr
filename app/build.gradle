@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -44,6 +45,9 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version_ktx"
     implementation "com.google.android.material:material:$material_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version_ktx"
+    implementation "com.airbnb.android:epoxy:$epoxy_version"
+    implementation "com.airbnb.android:epoxy-paging:$epoxy_version"
+    kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
 }

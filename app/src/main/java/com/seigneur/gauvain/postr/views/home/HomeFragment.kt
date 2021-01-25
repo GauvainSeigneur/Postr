@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.seigneur.gauvain.postr.R
 import com.seigneur.gauvain.postr.base.BaseFragment
-import com.seigneur.gauvain.postr.views.MainActivity
-import com.seigneur.gauvain.postr.views.login.LogInActivity
-import com.seigneur.gauvain.presentation.HomeViewModel
-import com.seigneur.gauvain.presentation.SplashViewModel
-import com.seigneur.gauvain.presentation.model.AuthenticationState
+import com.seigneur.gauvain.postr.views.home.epoxy.MovieListEpoxyController
+import com.seigneur.gauvain.presentation.home.HomeViewModel
 import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
@@ -24,7 +24,16 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("lolilol", "onViewCreated")
-        viewModel.photoListData.observe(viewLifecycleOwner, Observer {
+
+        movies_rv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        val pagedListController = MovieListEpoxyController()
+        movies_rv.adapter = pagedListController.adapter
+
+
+        viewModel.list?.observe(viewLifecycleOwner, Observer {
+            pagedListController.submitList(it)
+        })
+        /*viewModel.photoListData.observe(viewLifecycleOwner, Observer {
             Log.d("lolilol", "observed $it")
             when (it) {
                 is LiveDataState.Success -> {
@@ -34,7 +43,7 @@ class HomeFragment : BaseFragment() {
                     Log.d("lolilol", "error ${it.errorData}")
                 }
             }
-        })
+        })*/
     }
 
 }

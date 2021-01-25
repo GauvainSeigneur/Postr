@@ -1,6 +1,6 @@
 package com.seigneur.gauvain.presentation.di
 
-import com.seigneur.gauvain.presentation.HomeViewModel
+import com.seigneur.gauvain.presentation.home.HomeViewModel
 import com.seigneur.gauvain.presentation.LogInViewModel
 import com.seigneur.gauvain.presentation.SplashViewModel
 import org.koin.android.viewmodel.dsl.viewModel
