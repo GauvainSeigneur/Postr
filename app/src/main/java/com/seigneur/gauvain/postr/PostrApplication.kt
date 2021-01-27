@@ -22,7 +22,9 @@ class PostrApplication : Application() {
                     dataDataBaseModule,
                     dataManagerModule,
                     domainUseCaseModule,
-                    viewModelModule
+                    viewModelModule,
+                    providerModule,
+                    uiMapperModule
                 )
             )
         }

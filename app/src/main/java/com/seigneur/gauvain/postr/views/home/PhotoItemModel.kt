@@ -1,4 +1,4 @@
-package com.seigneur.gauvain.postr.views.home.epoxy
+package com.seigneur.gauvain.postr.views.home
 
 import android.view.View
 import android.widget.ImageView
@@ -6,8 +6,8 @@ import android.widget.TextView
 import com.airbnb.epoxy.*
 import com.seigneur.gauvain.postr.R
 
-@EpoxyModelClass(layout = R.layout.movie_item_layout)
-abstract class MovieItemModel : EpoxyModelWithHolder<MovieItemModel.Holder>() {
+@EpoxyModelClass(layout = R.layout.layout_item_photo)
+abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemModel.Holder>() {
 
     @EpoxyAttribute
     lateinit var title: String
@@ -45,6 +45,5 @@ abstract class MovieItemModel : EpoxyModelWithHolder<MovieItemModel.Holder>() {
             descriptionView = itemView.findViewById(R.id.movie_description)
             thumbnailImageView = itemView.findViewById(R.id.movie_thumbnail)
         }
-
     }
 }

@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.seigneur.gauvain.postr.R
 import com.seigneur.gauvain.postr.base.BaseFragment
-import com.seigneur.gauvain.postr.views.home.epoxy.MovieListEpoxyController
 import com.seigneur.gauvain.presentation.home.HomeViewModel
-import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -23,27 +21,18 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("lolilol", "onViewCreated")
-
         movies_rv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        val pagedListController = MovieListEpoxyController()
+        val pagedListController = PhotoListController()
         movies_rv.adapter = pagedListController.adapter
-
-
         viewModel.list?.observe(viewLifecycleOwner, Observer {
             pagedListController.submitList(it)
         })
-        /*viewModel.photoListData.observe(viewLifecycleOwner, Observer {
-            Log.d("lolilol", "observed $it")
-            when (it) {
-                is LiveDataState.Success -> {
-                    Log.d("lolilol", "photo ${it.data}")
-                }
-                is LiveDataState.Error -> {
-                    Log.d("lolilol", "error ${it.errorData}")
-                }
+        viewModel.nextRequestStateData.observe(viewLifecycleOwner, Observer { state ->
+            state?.let {
+                Log.d("nextRequest", "state $it")
+                pagedListController.nextRequestStateUiModel = it
             }
-        })*/
+        })
     }
 
 }
