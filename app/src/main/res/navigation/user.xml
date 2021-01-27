@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user"
+    app:startDestination="@id/userScreen">
+
+    <fragment
+        android:id="@+id/userScreen"
+        android:name="com.seigneur.gauvain.postr.views.UserFragment"
+        android:label="user"
+        tools:layout="@layout/fragment_user">
+        <action
+            android:id="@+id/action_user_to_detail"
+            app:destination="@id/detailScreen"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailScreen"
+        android:name="com.seigneur.gauvain.postr.views.DetailFragment"
+        android:label="detail"
+        tools:layout="@layout/fragment_detail"/>
+</navigation>

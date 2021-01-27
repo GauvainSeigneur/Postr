@@ -75,3 +75,8 @@ proguard_mapping.txt
 captures/
 
 wh.properties
+
+# App specific class
+Secrets
+Secrets.java
+Secrets.kt
