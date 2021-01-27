@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -12,8 +11,8 @@ import android.webkit.WebViewClient
 import androidx.lifecycle.Observer
 import com.seigneur.gauvain.postr.R
 import com.seigneur.gauvain.postr.views.MainActivity
-import com.seigneur.gauvain.presentation.LogInViewModel
-import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
+import com.seigneur.gauvain.presentation.login.LogInViewModel
+import com.seigneur.gauvain.presentation.common.model.livedata.LiveDataState
 import kotlinx.android.synthetic.main.activity_log_in.*
 
 import org.koin.android.viewmodel.ext.android.viewModel

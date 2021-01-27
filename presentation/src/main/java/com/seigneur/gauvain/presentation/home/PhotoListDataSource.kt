@@ -3,10 +3,10 @@ package com.seigneur.gauvain.presentation.home
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.seigneur.gauvain.domain.models.outcome.OutCome
-import com.seigneur.gauvain.presentation.model.PhotoUiModel
-import com.seigneur.gauvain.presentation.model.paging.NextRequestStateUiModel
-import com.seigneur.gauvain.presentation.pagedlist.NextRequestUiMapper
-import com.seigneur.gauvain.presentation.utils.ioJob
+import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
+import com.seigneur.gauvain.presentation.common.model.paging.NextRequestStateUiModel
+import com.seigneur.gauvain.presentation.common.pagedlist.NextRequestUiMapper
+import com.seigneur.gauvain.presentation.common.utils.ioJob
 
 class PhotoListDataSource(
     private val homeViewModel: HomeViewModel,

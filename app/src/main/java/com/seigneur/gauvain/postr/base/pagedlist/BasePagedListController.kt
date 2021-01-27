@@ -2,7 +2,7 @@ package com.seigneur.gauvain.postr.base.pagedlist
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.seigneur.gauvain.presentation.model.paging.NextRequestStateUiModel
+import com.seigneur.gauvain.presentation.common.model.paging.NextRequestStateUiModel
 
 /**
  * EpoxyController which works with PagedLists
@@ -13,7 +13,7 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
     /**
      * When the value is changed, the controller call requestModelBuild to add or remove the
      * dedicated item (loading/error)
-     * see addModels method 
+     * see addModels method
      */
     var nextRequestStateUiModel: NextRequestStateUiModel =
         NextRequestStateUiModel.Done //default value

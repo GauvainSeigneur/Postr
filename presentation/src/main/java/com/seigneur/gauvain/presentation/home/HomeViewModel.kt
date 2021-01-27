@@ -7,13 +7,13 @@ import androidx.paging.PagedList
 import com.seigneur.gauvain.domain.models.Photo
 import com.seigneur.gauvain.domain.models.outcome.OutCome
 import com.seigneur.gauvain.domain.usecase.GetPhotoListUseCase
-import com.seigneur.gauvain.presentation.model.PhotoUiModel
-import com.seigneur.gauvain.presentation.pagedlist.NextRequestUiMapper
+import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
+import com.seigneur.gauvain.presentation.common.pagedlist.NextRequestUiMapper
 
 class HomeViewModel(
     private val getPhotoListUseCase: GetPhotoListUseCase,
-    private val uiMapper: HomeUiMapper,
-    private val nextRequestUiMapper: NextRequestUiMapper
+    uiMapper: HomeUiMapper,
+    nextRequestUiMapper: NextRequestUiMapper
 ) : ViewModel() {
 
     private val config = PagedList.Config.Builder()

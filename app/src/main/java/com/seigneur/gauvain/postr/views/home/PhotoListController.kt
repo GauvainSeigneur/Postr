@@ -2,7 +2,7 @@ package com.seigneur.gauvain.postr.views.home
 
 import com.airbnb.epoxy.EpoxyModel
 import com.seigneur.gauvain.postr.base.pagedlist.BasePagedListController
-import com.seigneur.gauvain.presentation.model.PhotoUiModel
+import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
 
 /**
  * EpoxyController which works with PagedLists

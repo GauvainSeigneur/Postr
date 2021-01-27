@@ -1,8 +1,8 @@
 package com.seigneur.gauvain.presentation.home
 
 import androidx.paging.DataSource
-import com.seigneur.gauvain.presentation.model.PhotoUiModel
-import com.seigneur.gauvain.presentation.pagedlist.NextRequestUiMapper
+import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
+import com.seigneur.gauvain.presentation.common.pagedlist.NextRequestUiMapper
 
 class PhotoListDataSourceFactory(
     homeViewModel: HomeViewModel,

@@ -7,9 +7,9 @@ import androidx.lifecycle.Observer
 import com.seigneur.gauvain.postr.R
 import com.seigneur.gauvain.postr.views.MainActivity
 import com.seigneur.gauvain.postr.views.login.LogInActivity
-import com.seigneur.gauvain.presentation.SplashViewModel
-import com.seigneur.gauvain.presentation.model.AuthenticationState
-import com.seigneur.gauvain.presentation.model.livedata.LiveDataState
+import com.seigneur.gauvain.presentation.splash.SplashViewModel
+import com.seigneur.gauvain.presentation.common.model.AuthenticationState
+import com.seigneur.gauvain.presentation.common.model.livedata.LiveDataState
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.reflect.KClass
 
