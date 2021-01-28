@@ -27,10 +27,11 @@ class HomeFragment : BaseFragment() {
         viewModel.list?.observe(viewLifecycleOwner, Observer {
             pagedListController.submitList(it)
         })
-        viewModel.nextRequestStateData.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.pagingRequestStateData.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 Log.d("nextRequest", "state $it")
-                pagedListController.nextRequestStateUiModel = it
+                // manage initial load request here too
+                pagedListController.pagingRequestUiModel = it
             }
         })
     }

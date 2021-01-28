@@ -17,14 +17,14 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val config = PagedList.Config.Builder()
-        .setPageSize(5)
+        .setPageSize(15)
         .setInitialLoadSizeHint(2 * 15)
         .setEnablePlaceholders(true)
         .build()
     private val dataSourceFactory = PhotoListDataSourceFactory(this, uiMapper, nextRequestUiMapper)
 
     var list: LiveData<PagedList<PhotoUiModel>>? = null
-    val nextRequestStateData = dataSourceFactory.nextRequestStateData
+    val pagingRequestStateData = dataSourceFactory.requestStateData
 
     init {
         config?.let {
@@ -32,8 +32,8 @@ class HomeViewModel(
         }
     }
 
-    suspend fun getListOfPhotos(page: Long): OutCome<List<Photo>> {
-        return getPhotoListUseCase(page, 10, null)
+    suspend fun getListOfPhotos(page: Long, pageSize: Int): OutCome<List<Photo>> {
+        return getPhotoListUseCase(page, pageSize, null)
     }
 
 }
