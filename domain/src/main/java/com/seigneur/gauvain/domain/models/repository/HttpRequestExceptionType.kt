@@ -4,15 +4,19 @@ package com.seigneur.gauvain.domain.models.repository
  * Remote request exception type
  */
 enum class HttpRequestExceptionType {
+    //40X errors
+    BAD_REQUEST,
+    UNAUTHORIZED,
+    FORBIDDEN,
+    NOT_FOUND,
+    //50X error
+    SERVER_ERROR,
+    //Other
     UNKNOWN_HOST,
-    ERROR_UNKNOWN,
     CONNECTION_LOST,
     BODY_NULL,
-    REQUEST_UNSUCCESSFUL,
-    ERROR_RESPONSE,
     UNMAPPED_REQUEST_EXCEPTION,
-    HTTP_EXCEPTION,
-    MISSING_PARAMETERS
+    ERROR_UNKNOWN
 }
 
 const val EXCEPTION_UNKNOWN_HOST_DESC = "Unknown Host Exception"

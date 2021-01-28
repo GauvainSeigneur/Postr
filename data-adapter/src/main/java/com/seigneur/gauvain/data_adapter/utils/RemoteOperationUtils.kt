@@ -1,11 +1,14 @@
 package com.seigneur.gauvain.data_adapter.utils
 
-import android.util.Log
+import com.google.gson.Gson
+import com.seigneur.gauvain.data_adapter.models.remote.ErrorResponse
 import com.seigneur.gauvain.domain.models.repository.*
+import okhttp3.ResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 import java.net.UnknownHostException
+import java.nio.charset.Charset
 
 suspend fun <T> apiCall(call: suspend () -> Response<T>): RepositoryResult<T> {
     val response: Response<T>
@@ -16,15 +19,12 @@ suspend fun <T> apiCall(call: suspend () -> Response<T>): RepositoryResult<T> {
     }
 
     return if (!response.isSuccessful) {
-        val errorBody = response.errorBody()
-        Log.d("remoteOperationUtils", "response unsuccessful: $errorBody")
+
+        val errorsResponse = convertErrorBody(response.errorBody())
         RepositoryResult.Error(
-            RepositoryExceptionContent(
-                RepositoryExceptionType.Remote(
-                    HttpRequestExceptionType.REQUEST_UNSUCCESSFUL
-                ),
-                //Gson().fromJson(errorBody.toString() , javaClass) //todo deserialize it
-                errorBody.toString()
+            mapUnsuccessfulResponse(
+                response.code(),
+                errorsResponse?.errors?.joinToString(separator = ",") ?: "unmapped errorBody"
             )
         )
     } else {
@@ -36,7 +36,7 @@ suspend fun <T> apiCall(call: suspend () -> Response<T>): RepositoryResult<T> {
                 RepositoryExceptionType.Remote(
                     HttpRequestExceptionType.BODY_NULL
                 ),
-               EXCEPTION_BODY_NULL_DESC
+                EXCEPTION_BODY_NULL_DESC
             )
         )
     }
@@ -68,11 +68,10 @@ private fun getRequestExceptionContent(throwable: Throwable): RepositoryExceptio
             )
 
         is HttpException ->
-            RepositoryExceptionContent(
-                RepositoryExceptionType.Remote(
-                    HttpRequestExceptionType.HTTP_EXCEPTION,
-                ),
-                "${throwable.cause}: ${throwable.message}"
+            mapUnsuccessfulResponse(
+                throwable.code(),
+                convertErrorBody(throwable.response()?.errorBody())
+                    ?.errors?.joinToString(separator = ",") ?: throwable.message()
             )
         else -> {
             RepositoryExceptionContent(
@@ -84,3 +83,66 @@ private fun getRequestExceptionContent(throwable: Throwable): RepositoryExceptio
         }
     }
 
+private fun mapUnsuccessfulResponse(code: Int, errors: String): RepositoryExceptionContent {
+    return when (code) {
+        400 -> {
+            RepositoryExceptionContent(
+                RepositoryExceptionType.Remote(
+                    HttpRequestExceptionType.BAD_REQUEST,
+                ),
+                errors
+            )
+        }
+        401 -> {
+            RepositoryExceptionContent(
+                RepositoryExceptionType.Remote(
+                    HttpRequestExceptionType.UNAUTHORIZED,
+                ),
+                errors
+            )
+        }
+        403 -> {
+            RepositoryExceptionContent(
+                RepositoryExceptionType.Remote(
+                    HttpRequestExceptionType.FORBIDDEN,
+                ),
+                errors
+            )
+        }
+        404 -> {
+            RepositoryExceptionContent(
+                RepositoryExceptionType.Remote(
+                    HttpRequestExceptionType.NOT_FOUND,
+                ),
+                errors
+            )
+        }
+        500, 501, 502, 503 -> {
+            RepositoryExceptionContent(
+                RepositoryExceptionType.Remote(
+                    HttpRequestExceptionType.SERVER_ERROR,
+                ),
+                errors
+            )
+        }
+        else -> {
+            RepositoryExceptionContent(
+                RepositoryExceptionType.Remote(
+                    HttpRequestExceptionType.ERROR_UNKNOWN,
+                ),
+                errors
+            )
+        }
+    }
+}
+
+private fun convertErrorBody(responseBody: ResponseBody?): ErrorResponse? {
+    return try {
+        responseBody?.source()?.let {
+            val l = it.readString(Charset.defaultCharset())
+            Gson().fromJson(l, ErrorResponse::class.java)
+        }
+    } catch (exception: Exception) {
+        null
+    }
+}
