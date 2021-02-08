@@ -23,14 +23,6 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
             requestModelBuild()
         }
 
-
-    /*var requestStateUiModel: RequestStateUiModel =
-        RequestStateUiModel.Done //default value
-        set(value) {
-            field = value
-            requestModelBuild()
-        }*/
-
     abstract fun buildListItem(item: T) : EpoxyModel<*>
 
     /**
@@ -60,7 +52,6 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
                     is RequestStateUiModel.Done -> super.addModels(models.distinct())
                     is RequestStateUiModel.Loading -> super.addModels(
                         models.plus(
-                            //Error View Model
                             NextLoadingEpoxyModel_()
                                 .id(LOADING_ID)
                         ).distinct()
@@ -68,7 +59,6 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
                     is RequestStateUiModel.Error -> {
                         super.addModels(
                             models.plus(
-                                //Error View Model
                                 NextErrorEpoxyModel_()
                                     .id(ERROR_ID)
                                     .errorStr(currentState.data.description)
@@ -79,27 +69,6 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
                 }
             }
         }
-        /*when (val currentState = requestStateUiModel) {
-            is RequestStateUiModel.Done -> super.addModels(models.distinct())
-            is RequestStateUiModel.Loading -> super.addModels(
-                models.plus(
-                    //Error View Model
-                    NextLoadingEpoxyModel_()
-                        .id(LOADING_ID)
-                ).distinct()
-            )
-            is RequestStateUiModel.Error -> {
-                super.addModels(
-                    models.plus(
-                        //Error View Model
-                        NextErrorEpoxyModel_()
-                            .id(ERROR_ID)
-                            .errorStr(currentState.data.description)
-                            .clickListener { _ -> currentState.data.clickAction() }
-                    ).filter { it !is NextLoadingEpoxyModel_ }
-                )
-            }
-        }*/
     }
 
     override fun onExceptionSwallowed(exception: RuntimeException) {

@@ -17,8 +17,8 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val config = PagedList.Config.Builder()
-        .setPageSize(15)
-        .setInitialLoadSizeHint(2 * 15)
+        .setPageSize(PAGE_SIZE)
+        .setInitialLoadSizeHint(INITIAL_PAGE_SIZE)
         .setEnablePlaceholders(true)
         .build()
     private val dataSourceFactory = PhotoListDataSourceFactory(this, uiMapper, nextRequestUiMapper)
@@ -34,6 +34,11 @@ class HomeViewModel(
 
     suspend fun getListOfPhotos(page: Long, pageSize: Int): OutCome<List<Photo>> {
         return getPhotoListUseCase(page, pageSize, null)
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 30
+        private const val INITIAL_PAGE_SIZE = 45
     }
 
 }

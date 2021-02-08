@@ -8,11 +8,11 @@ class PhotoListDataSourceFactory(
     homeViewModel: HomeViewModel,
     uiMapper: HomeUiMapper,
     nextRequestUiMapper: NextRequestUiMapper
-) : DataSource.Factory<Int, PhotoUiModel>() {
+) : DataSource.Factory<Long, PhotoUiModel>() {
 
     private val dataSource = PhotoListDataSource(nextRequestUiMapper, homeViewModel, uiMapper)
 
-    override fun create(): DataSource<Int, PhotoUiModel> {
+    override fun create(): DataSource<Long, PhotoUiModel> {
         return dataSource
     }
 

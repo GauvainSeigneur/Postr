@@ -8,7 +8,7 @@ import com.seigneur.gauvain.domain.models.outcome.OutCome
 import com.seigneur.gauvain.domain.usecase.GetCurrentTokenUseCase
 import com.seigneur.gauvain.presentation.common.model.livedata.LiveDataState
 import com.seigneur.gauvain.presentation.common.model.AuthenticationState
-import com.seigneur.gauvain.presentation.common.utils.backgroundJob
+import com.seigneur.gauvain.presentation.utils.backgroundJob
 
 private typealias SplashState = LiveDataState<AuthenticationState>
 

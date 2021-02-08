@@ -17,21 +17,15 @@ abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemModel.Holder>() {
     lateinit var thumbnailUrl: String
 
     override fun bind(holder: Holder) {
-        if (title.equals("loading")) {
+        if (title.equals("loading")) {         //todo - remove it
             holder.titleView?.text = title
             holder.descriptionView?.visibility = View.GONE
             holder.thumbnailImageView?.visibility = View.GONE
         } else {
             holder.descriptionView?.visibility = View.VISIBLE
             holder.thumbnailImageView?.visibility = View.VISIBLE
-
             holder.titleView?.text = title
             holder.descriptionView?.text = description
-            /*Picasso.get().load(thumbnailUrl)
-                .fit()
-                .centerCrop()
-                .placeholder(R.color.primary_dark_material_light)
-                .into(holder.thumbnailImageView)*/
         }
     }
 

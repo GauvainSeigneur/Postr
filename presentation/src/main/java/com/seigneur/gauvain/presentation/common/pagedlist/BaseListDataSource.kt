@@ -6,38 +6,60 @@ import androidx.paging.PageKeyedDataSource
 import com.seigneur.gauvain.domain.models.outcome.OutCome
 import com.seigneur.gauvain.presentation.common.model.paging.PagingRequestUiModel
 import com.seigneur.gauvain.presentation.common.model.paging.RequestStateUiModel
-import com.seigneur.gauvain.presentation.common.utils.ioJob
+import com.seigneur.gauvain.presentation.utils.ioJob
 
-abstract class BasePagedListDataSource<V : ViewModel, T, U>(
+/**
+ * Base class for pagingDataSource
+ * it allows to perform same behavior on each pagingDataSource and reuse same code
+ */
+abstract class BaseListDataSource<V : ViewModel, T, Key, Value>(
     private val viewModel: V,
     private val nextRequestUiMapper: NextRequestUiMapper
-) : PageKeyedDataSource<Int, U>() {
+) : PageKeyedDataSource<Key, Value>() {
 
-    private var pageSize = 5
-    var nextPage: Long = 1L
-        private set
+    /**
+     * Get the request state
+     */
     val requestStateData: MutableLiveData<PagingRequestUiModel> = MutableLiveData()
 
-    abstract suspend fun initialCall(pageSize: Int): OutCome<T>
-    abstract suspend fun nextCall(pageSize: Int, nextPage: Long): OutCome<T>
-    abstract fun mapResult(data: T): List<U>
-    abstract var nextPageKey: Long
+    /**
+     * Define request for initial and after request
+     */
+    abstract suspend fun loadInitialRequest(keyPage: Key, pageSize: Int): OutCome<T>
+    abstract suspend fun loadAfterRequest(keyPage: Key, pageSize: Int): OutCome<T>
+    abstract fun mapResult(data: T): List<Value>
+
+    /**
+     * Define page for each request
+     */
+    abstract val firstPageKey: Key
+    abstract val firstNextPageKey: Key
+    abstract fun nextKey(currentKey: Key): Key
 
     override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, U>
+        params: LoadInitialParams<Key>,
+        callback: LoadInitialCallback<Key, Value>
     ) {
-        pageSize = params.requestedLoadSize
-        requestStateData.postValue(
-            PagingRequestUiModel.Initial(
-                RequestStateUiModel.Loading
-            )
-        )
+        handleFirstLoad(params, callback)
+    }
+
+    override fun loadAfter(params: LoadParams<Key>, callback: LoadCallback<Key, Value>) {
+        handleLoadAfter(params, callback)
+    }
+
+    override fun loadBefore(params: LoadParams<Key>, callback: LoadCallback<Key, Value>) {
+        // do nothing
+    }
+
+    private fun handleFirstLoad(
+        params: LoadInitialParams<Key>,
+        callback: LoadInitialCallback<Key, Value>
+    ) {
         viewModel.ioJob {
-            when (val outcome = initialCall(pageSize)) {
+            when (val outcome = loadInitialRequest(firstPageKey, params.requestedLoadSize)) {
                 is OutCome.Success -> {
                     val list = mapResult(outcome.data)
-                    callback.onResult(list, 0, list.count(), null, nextPageKey.toInt())
+                    callback.onResult(list, 0, list.count(), null, firstNextPageKey)
                     requestStateData.postValue(
                         PagingRequestUiModel.Initial(
                             RequestStateUiModel.Done
@@ -59,16 +81,16 @@ abstract class BasePagedListDataSource<V : ViewModel, T, U>(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, U>) {
-        pageSize = params.requestedLoadSize
-        nextPageKey = params.key.toLong()
+
+    private fun handleLoadAfter(params: LoadParams<Key>, callback: LoadCallback<Key, Value>) {
         requestStateData.postValue(PagingRequestUiModel.Next(RequestStateUiModel.Loading))
         viewModel.ioJob {
-            when (val outcome = nextCall(pageSize, nextPageKey)) {
+            when (val outcome =
+                loadAfterRequest(params.key, params.requestedLoadSize)) {
                 is OutCome.Success -> {
                     val list = mapResult(outcome.data)
-                    callback.onResult(list, params.key + 1)
                     requestStateData.postValue(PagingRequestUiModel.Next(RequestStateUiModel.Done))
+                    callback.onResult(list, nextKey(params.key))
                 }
                 is OutCome.Error -> {
                     requestStateData.postValue(
@@ -85,7 +107,4 @@ abstract class BasePagedListDataSource<V : ViewModel, T, U>(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, U>) {
-        //do nothing
-    }
 }

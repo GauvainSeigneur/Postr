@@ -13,8 +13,7 @@ import com.seigneur.gauvain.data_adapter.utils.performRoomCall
 class GetAccessTokenRepositoryImpl(
     private val api: UnsplashService,
     private val dataBase: PostrDataBase
-) :
-    GetAccessTokenRepository {
+) : GetAccessTokenRepository {
 
     override suspend fun getAccessToken(code: String): Token {
         return when (val result = apiCall {

@@ -5,9 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search"
     app:startDestination="@+id/searchScreen">
+    <!--app:startDestination="@+id/searchScreen"> -->
+    <!--<fragment
+        android:id="@+id/userSearchScreen"
+        android:name="com.seigneur.gauvain.postr.views.search.user.SearchUserFragment"
+        android:label="search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_detail"
+            app:destination="@id/detailScreen"/>
+    </fragment>-->
     <fragment
         android:id="@+id/searchScreen"
-        android:name="com.seigneur.gauvain.postr.views.SearchFragment"
+        android:name="com.seigneur.gauvain.postr.views.search.SearchFragment"
         android:label="search"
         tools:layout="@layout/fragment_search">
         <action

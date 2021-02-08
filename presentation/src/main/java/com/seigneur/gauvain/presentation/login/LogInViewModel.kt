@@ -10,7 +10,7 @@ import com.seigneur.gauvain.presentation.common.model.LoginUiModel
 import com.seigneur.gauvain.presentation.common.model.livedata.ErrorData
 import com.seigneur.gauvain.presentation.common.model.livedata.ErrorDataType
 import com.seigneur.gauvain.presentation.common.model.livedata.LiveDataState
-import com.seigneur.gauvain.presentation.common.utils.ioJob
+import com.seigneur.gauvain.presentation.utils.ioJob
 import com.seigneur.gauvain.data_adapter.manager.SessionHolder
 
 private typealias LoginState = LiveDataState<LoginUiModel>

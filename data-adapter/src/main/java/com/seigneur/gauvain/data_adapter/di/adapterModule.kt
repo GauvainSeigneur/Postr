@@ -6,6 +6,8 @@ import com.seigneur.gauvain.domain.repository.InsertTokenRepository
 import com.seigneur.gauvain.data_adapter.repository.GetAccessTokenRepositoryImpl
 import com.seigneur.gauvain.data_adapter.repository.GetPhotoRepositoryImpl
 import com.seigneur.gauvain.data_adapter.repository.InsertTokenRepositoryImpl
+import com.seigneur.gauvain.data_adapter.repository.SearchRepositoryImpl
+import com.seigneur.gauvain.domain.repository.SearchRepository
 import org.koin.dsl.module
 
 val adapterModule = module {
@@ -24,5 +26,8 @@ val adapterModule = module {
         GetPhotoRepositoryImpl(
             get()
         )
+    }
+    single<SearchRepository> {
+        SearchRepositoryImpl(get())
     }
 }

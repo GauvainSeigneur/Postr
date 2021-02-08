@@ -1,7 +1,10 @@
 package com.seigneur.gauvain.data_adapter.service
 
+import com.seigneur.gauvain.data_adapter.models.remote.collection.PhotoCollection
 import com.seigneur.gauvain.data_adapter.models.remote.photo.Photo
+import com.seigneur.gauvain.data_adapter.models.remote.search.SearchResponse
 import com.seigneur.gauvain.data_adapter.models.remote.token.AccessToken
+import com.seigneur.gauvain.data_adapter.models.remote.user.User
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -33,5 +36,27 @@ interface UnsplashService {
         @Query("per_page") pagePage: Int,
         @Query("order_by") value: String?
     ): Response<List<Photo>>
+
+
+    @GET("search/users")
+    suspend fun searchUser(
+        @Query("query") query: String?,
+        @Query("page") page: Long,
+        @Query("per_page") pagePage: Int
+    ): Response<SearchResponse<User>>
+
+    @GET("search/photos")
+    suspend fun searchPhoto(
+        @Query("query") query: String?,
+        @Query("page") page: Long,
+        @Query("per_page") pagePage: Int
+    ): Response<SearchResponse<Photo>>
+
+    @GET("search/collections")
+    suspend fun searchCollection(
+        @Query("query") query: String?,
+        @Query("page") page: Long,
+        @Query("per_page") pagePage: Int
+    ): Response<SearchResponse<PhotoCollection>>
 
 }
