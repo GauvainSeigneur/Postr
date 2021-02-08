@@ -1,4 +1,4 @@
-package com.seigneur.gauvain.presentation.common.utils
+package com.seigneur.gauvain.presentation.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

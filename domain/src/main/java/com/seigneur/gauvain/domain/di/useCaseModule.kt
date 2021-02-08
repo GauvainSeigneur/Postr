@@ -1,9 +1,6 @@
 package com.seigneur.gauvain.domain.di
 
-import com.seigneur.gauvain.domain.usecase.GetAccessTokenUseCase
-import com.seigneur.gauvain.domain.usecase.GetCurrentTokenUseCase
-import com.seigneur.gauvain.domain.usecase.GetPhotoListUseCase
-import com.seigneur.gauvain.domain.usecase.SaveAccessTokenUseCase
+import com.seigneur.gauvain.domain.usecase.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -11,4 +8,7 @@ val useCaseModule = module {
     factory { GetAccessTokenUseCase(get(), get()) }
     factory { GetCurrentTokenUseCase(get(), get()) }
     factory { GetPhotoListUseCase(get()) }
+    factory { SearchUserUseCase(get()) }
+    factory { SearchPhotoUseCase(get()) }
+    factory { SearchCollectionUseCase(get()) }
 }

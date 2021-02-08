@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.seigneur.gauvain.presentation.common.utils.event
+package com.seigneur.gauvain.presentation.utils.event
 
 import androidx.lifecycle.Observer
 

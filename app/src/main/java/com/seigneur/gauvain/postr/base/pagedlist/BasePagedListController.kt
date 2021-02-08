@@ -2,7 +2,8 @@ package com.seigneur.gauvain.postr.base.pagedlist
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.seigneur.gauvain.presentation.common.model.paging.NextRequestStateUiModel
+import com.seigneur.gauvain.presentation.common.model.paging.PagingRequestUiModel
+import com.seigneur.gauvain.presentation.common.model.paging.RequestStateUiModel
 
 /**
  * EpoxyController which works with PagedLists
@@ -15,8 +16,8 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
      * dedicated item (loading/error)
      * see addModels method
      */
-    var nextRequestStateUiModel: NextRequestStateUiModel =
-        NextRequestStateUiModel.Done //default value
+    var pagingRequestUiModel: PagingRequestUiModel =
+        PagingRequestUiModel.Initial(RequestStateUiModel.Done) //default value
         set(value) {
             field = value
             requestModelBuild()
@@ -42,25 +43,30 @@ abstract class BasePagedListController<T> : PagedListEpoxyController<T>() {
      * Adding models
      */
     override fun addModels(models: List<EpoxyModel<*>>) {
-        when (val currentState = nextRequestStateUiModel) {
-            is NextRequestStateUiModel.Done -> super.addModels(models.distinct())
-            is NextRequestStateUiModel.Loading -> super.addModels(
-                models.plus(
-                    //Error View Model
-                    NextLoadingEpoxyModel_()
-                        .id(LOADING_ID)
-                ).distinct()
-            )
-            is NextRequestStateUiModel.Error -> {
-                super.addModels(
-                    models.plus(
-                        //Error View Model
-                        NextErrorEpoxyModel_()
-                            .id(ERROR_ID)
-                            .errorStr(currentState.data.description)
-                            .clickListener { _ -> currentState.data.clickAction() }
-                    ).filter { it !is NextLoadingEpoxyModel_ }
-                )
+        when(val pagingRequest  = pagingRequestUiModel ) {
+            is PagingRequestUiModel.Initial -> {
+                super.addModels(models.distinct())
+            }
+            is PagingRequestUiModel.Next -> {
+                when (val currentState = pagingRequest.state) {
+                    is RequestStateUiModel.Done -> super.addModels(models.distinct())
+                    is RequestStateUiModel.Loading -> super.addModels(
+                        models.plus(
+                            NextLoadingEpoxyModel_()
+                                .id(LOADING_ID)
+                        ).distinct()
+                    )
+                    is RequestStateUiModel.Error -> {
+                        super.addModels(
+                            models.plus(
+                                NextErrorEpoxyModel_()
+                                    .id(ERROR_ID)
+                                    .errorStr(currentState.data.description)
+                                    .clickListener { _ -> currentState.data.clickAction() }
+                            ).filter { it !is NextLoadingEpoxyModel_ }
+                        )
+                    }
+                }
             }
         }
     }
