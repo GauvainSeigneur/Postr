@@ -2,7 +2,7 @@ package com.seigneur.gauvain.data_adapter.models.remote.collection
 
 import com.seigneur.gauvain.domain.models.Photo
 
-data class PhotoCollection(
+data class PhotoCollectionModel(
     val id: String,
     var username: String?,
     var cover_photo: Photo?,

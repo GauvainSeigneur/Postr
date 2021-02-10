@@ -11,4 +11,5 @@ class NextRequestUiMapper(private val stringProvider: StringProvider) {
             buttonLabel = "label",
             clickAction = { action() }
         )
+
 }

@@ -8,6 +8,7 @@ import com.seigneur.gauvain.domain.models.repository.RepositoryResult
 import com.seigneur.gauvain.data_adapter.local.PostrDataBase
 import com.seigneur.gauvain.data_adapter.service.*
 import com.seigneur.gauvain.data_adapter.utils.apiCall
+import com.seigneur.gauvain.data_adapter.utils.exhaustive
 import com.seigneur.gauvain.data_adapter.utils.performRoomCall
 
 class GetAccessTokenRepositoryImpl(

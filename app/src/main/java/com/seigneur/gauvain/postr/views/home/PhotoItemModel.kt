@@ -1,43 +1,41 @@
 package com.seigneur.gauvain.postr.views.home
 
+import android.content.Context
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import com.airbnb.epoxy.*
 import com.seigneur.gauvain.postr.R
+import com.seigneur.gauvain.postr.utils.loadPhotoUrlWithThumbnail
+import com.seigneur.gauvain.postr.widgets.AspectRatioImageView
+import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
 
 @EpoxyModelClass(layout = R.layout.layout_item_photo)
 abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemModel.Holder>() {
 
     @EpoxyAttribute
-    lateinit var title: String
-    @EpoxyAttribute
-    lateinit var description: String
-    @EpoxyAttribute
     lateinit var thumbnailUrl: String
 
-    override fun bind(holder: Holder) {
-        if (title.equals("loading")) {         //todo - remove it
-            holder.titleView?.text = title
-            holder.descriptionView?.visibility = View.GONE
-            holder.thumbnailImageView?.visibility = View.GONE
-        } else {
-            holder.descriptionView?.visibility = View.VISIBLE
-            holder.thumbnailImageView?.visibility = View.VISIBLE
-            holder.titleView?.text = title
-            holder.descriptionView?.text = description
+    @EpoxyAttribute
+    lateinit var photoUiModel: PhotoUiModel
+
+    // Holder
+    class Holder : EpoxyHolder() {
+        lateinit var photoItemImageView: AspectRatioImageView
+        var context: Context? = null
+        override fun bindView(itemView: View) {
+            context = itemView.context
+            photoItemImageView = itemView.findViewById(R.id.photoItemImageView)
         }
     }
 
-    class Holder : EpoxyHolder() {
-        var titleView: TextView? = null
-        var descriptionView: TextView? = null
-        var thumbnailImageView: ImageView? = null
-
-        override fun bindView(itemView: View) {
-            titleView = itemView.findViewById(R.id.movie_title)
-            descriptionView = itemView.findViewById(R.id.movie_description)
-            thumbnailImageView = itemView.findViewById(R.id.movie_thumbnail)
-        }
+    override fun bind(holder: Holder) {
+        holder.photoItemImageView.setAspectRatio(
+            photoUiModel.dimens.width,
+            photoUiModel.dimens.height
+        )
+        holder.photoItemImageView.loadPhotoUrlWithThumbnail(
+            photoUiModel.photoUrl.regular,
+            photoUiModel.photoUrl.thumb,
+            photoUiModel.color
+        )
     }
 }

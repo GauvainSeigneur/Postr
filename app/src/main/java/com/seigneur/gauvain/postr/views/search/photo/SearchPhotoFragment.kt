@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.seigneur.gauvain.postr.R
 import com.seigneur.gauvain.postr.base.BaseFragment
-import com.seigneur.gauvain.postr.views.search.SearchResultController
 import com.seigneur.gauvain.presentation.search.SearchViewModel
 import com.seigneur.gauvain.presentation.search.photo.SearchPhotoViewModel
 import com.seigneur.gauvain.presentation.utils.event.EventObserver
@@ -44,10 +43,10 @@ class SearchPhotoFragment : BaseFragment() {
     }
 
     private fun observePagedList() {
-        searchPhotoViewModel.list?.observe(viewLifecycleOwner, Observer {
+        searchPhotoViewModel.list?.observe(viewLifecycleOwner, {
             controller.submitList(it)
         })
-        searchPhotoViewModel.pagingRequestStateData?.observe(viewLifecycleOwner, Observer { state ->
+        searchPhotoViewModel.pagingRequestStateData?.observe(viewLifecycleOwner, { state ->
             state?.let {
                 controller.pagingRequestUiModel = it
             }

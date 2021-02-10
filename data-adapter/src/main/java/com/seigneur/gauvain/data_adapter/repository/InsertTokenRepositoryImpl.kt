@@ -18,9 +18,7 @@ class InsertTokenRepositoryImpl(private val tokenDao: TokenDao) :
             token.date,
             token.value
         )
-        when (val result = performRoomCall {
-            tokenDao.insertTokenEntity(tokenEntity)
-        }) {
+        when (val result = performRoomCall { tokenDao.insertTokenEntity(tokenEntity) }) {
             is RepositoryResult.Success -> {
                 Log.d("insertToken", "success ${result.data}")
                 return result.data

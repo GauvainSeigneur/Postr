@@ -1,6 +1,6 @@
 package com.seigneur.gauvain.data_adapter.models.remote.photo
 
-data class Exif(
+data class ExifModel(
     val make: String?,
     val model: String?,
     val exposure_time: Long?,

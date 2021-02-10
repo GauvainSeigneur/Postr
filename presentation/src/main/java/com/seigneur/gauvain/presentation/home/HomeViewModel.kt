@@ -7,12 +7,13 @@ import androidx.paging.PagedList
 import com.seigneur.gauvain.domain.models.Photo
 import com.seigneur.gauvain.domain.models.outcome.OutCome
 import com.seigneur.gauvain.domain.usecase.GetPhotoListUseCase
+import com.seigneur.gauvain.presentation.common.mapper.PhotoUiModelMapper
 import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
 import com.seigneur.gauvain.presentation.common.pagedlist.NextRequestUiMapper
 
 class HomeViewModel(
     private val getPhotoListUseCase: GetPhotoListUseCase,
-    uiMapper: HomeUiMapper,
+    uiModelMapper: PhotoUiModelMapper,
     nextRequestUiMapper: NextRequestUiMapper
 ) : ViewModel() {
 
@@ -21,7 +22,7 @@ class HomeViewModel(
         .setInitialLoadSizeHint(INITIAL_PAGE_SIZE)
         .setEnablePlaceholders(true)
         .build()
-    private val dataSourceFactory = PhotoListDataSourceFactory(this, uiMapper, nextRequestUiMapper)
+    private val dataSourceFactory = PhotoListDataSourceFactory(this, uiModelMapper, nextRequestUiMapper)
 
     var list: LiveData<PagedList<PhotoUiModel>>? = null
     val pagingRequestStateData = dataSourceFactory.requestStateData

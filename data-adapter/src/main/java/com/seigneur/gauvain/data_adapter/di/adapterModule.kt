@@ -24,10 +24,11 @@ val adapterModule = module {
     }
     single<GetPhotoRepository> {
         GetPhotoRepositoryImpl(
+            get(),
             get()
         )
     }
     single<SearchRepository> {
-        SearchRepositoryImpl(get())
+        SearchRepositoryImpl(get(), get())
     }
 }

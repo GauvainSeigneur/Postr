@@ -1,13 +1,13 @@
 package com.seigneur.gauvain.data_adapter.models.remote.user
 
-data class User(
+data class UserModel(
     val id: String,
     val username: String,
     val first_name: String,
     val last_name: String,
     val portfolio_url: String?,
     val bio: String,
-    val profile_image: ProfileImage,
+    val profile_image: ProfileImageModel,
     val total_likes: Int,
     val total_photos: Int,
     val total_collections: Int,

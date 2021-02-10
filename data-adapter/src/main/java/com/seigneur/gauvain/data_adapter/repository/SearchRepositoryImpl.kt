@@ -1,5 +1,6 @@
 package com.seigneur.gauvain.data_adapter.repository
 
+import com.seigneur.gauvain.data_adapter.mapper.PhotoMapper
 import com.seigneur.gauvain.domain.models.repository.RepositoryResult
 import com.seigneur.gauvain.data_adapter.service.*
 import com.seigneur.gauvain.data_adapter.utils.apiCall
@@ -10,7 +11,8 @@ import com.seigneur.gauvain.domain.repository.SearchException
 import com.seigneur.gauvain.domain.repository.SearchRepository
 
 class SearchRepositoryImpl(
-    private val api: UnsplashService
+    private val api: UnsplashService,
+    private val photoMapper: PhotoMapper
 ) : SearchRepository {
 
     override suspend fun searchUser(
@@ -43,7 +45,7 @@ class SearchRepositoryImpl(
         }) {
             is RepositoryResult.Success -> {
                 result.data.results.map {
-                    Photo(it.id, it.description)
+                    photoMapper.toPhoto(it)
                 }
             }
             is RepositoryResult.Error -> throw SearchException(
@@ -53,7 +55,11 @@ class SearchRepositoryImpl(
         }
     }
 
-    override suspend fun searchCollection(query: String, page: Long, perPage: Int): List<PhotoCollection> {
+    override suspend fun searchCollection(
+        query: String,
+        page: Long,
+        perPage: Int
+    ): List<PhotoCollection> {
         return when (val result = apiCall {
             api.searchCollection(
                 query, page, perPage

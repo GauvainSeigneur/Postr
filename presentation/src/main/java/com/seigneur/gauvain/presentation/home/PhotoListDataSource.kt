@@ -2,6 +2,7 @@ package com.seigneur.gauvain.presentation.home
 
 import com.seigneur.gauvain.domain.models.Photo
 import com.seigneur.gauvain.domain.models.outcome.OutCome
+import com.seigneur.gauvain.presentation.common.mapper.PhotoUiModelMapper
 import com.seigneur.gauvain.presentation.common.model.PhotoUiModel
 import com.seigneur.gauvain.presentation.common.pagedlist.BaseListDataSource
 import com.seigneur.gauvain.presentation.common.pagedlist.NextRequestUiMapper
@@ -9,7 +10,7 @@ import com.seigneur.gauvain.presentation.common.pagedlist.NextRequestUiMapper
 class PhotoListDataSource(
     nextRequestUiMapper: NextRequestUiMapper,
     private val homeViewModel: HomeViewModel,
-    private val uiMapper: HomeUiMapper,
+    private val uiModelMapper: PhotoUiModelMapper,
 ) : BaseListDataSource<HomeViewModel, List<Photo>, Long, PhotoUiModel>(
     homeViewModel, nextRequestUiMapper
 ) {
@@ -28,7 +29,7 @@ class PhotoListDataSource(
 
     override fun mapResult(data: List<Photo>): List<PhotoUiModel> {
         return data.map {
-            uiMapper.toPhotoUiModel(it)
+            uiModelMapper.toPhotoUiModel(it)
         }
     }
 }

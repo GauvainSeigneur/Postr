@@ -21,6 +21,7 @@ class PostrApplication : Application() {
                     dataAdapterModule,
                     dataDataBaseModule,
                     dataManagerModule,
+                    dataMapperModule,
                     domainUseCaseModule,
                     viewModelModule,
                     providerModule,
@@ -28,5 +29,15 @@ class PostrApplication : Application() {
                 )
             )
         }
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        GlideApp.get(this).clearMemory()
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        GlideApp.get(this).trimMemory(level)
     }
 }

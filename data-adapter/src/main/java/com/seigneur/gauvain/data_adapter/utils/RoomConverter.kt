@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.seigneur.gauvain.data_adapter.models.remote.token.AccessToken
+import com.seigneur.gauvain.data_adapter.models.remote.token.AccessTokenModel
 import java.util.ArrayList
 import java.util.Date
 
@@ -16,22 +16,20 @@ object RoomConverter {
         return if (timestamp == null) null else Date(timestamp)
     }
 
-    @TypeConverter
+    /*@TypeConverter
     @JvmStatic
-    fun accessTokenToString(accessToken: AccessToken?): String? {
+    fun accessTokenToString(accessToken: AccessTokenModel?): String? {
         val gson = Gson()
         return if (accessToken == null) null else gson.toJson(accessToken)
     }
 
     @TypeConverter
     @JvmStatic
-    fun stringToAccessToken(string: String): AccessToken? {
-        val type = object : TypeToken<AccessToken>() {
+    fun stringToAccessToken(string: String): AccessTokenModel? {
+        val type = object : TypeToken<AccessTokenModel>() {
         }.type
-        return Gson().fromJson<AccessToken>(string, type)
-    }
-
-
+        return Gson().fromJson<AccessTokenModel>(string, type)
+    }*/
 
     @TypeConverter
     @JvmStatic

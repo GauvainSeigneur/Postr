@@ -12,8 +12,7 @@ class PhotoListController : BasePagedListController<PhotoUiModel>() {
     override fun buildListItem(item: PhotoUiModel): EpoxyModel<*> {
         return PhotoItemModel_()
             .id(item.id)
-            .title(item.description)
-            .description(item.description)
-            .thumbnailUrl("lol")
+            .photoUiModel(item)
+            .thumbnailUrl(item.photoUrl.regular)
     }
 }
